@@ -3,27 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Polyrhythms</title>
   </head>
   <body>
-    <div style="font-size: 4rem">
+    <div class="instruction">
       If you can't hear the audio, click anywhere on the page to enable audio
       (some browsers may disable audio by default unless there's a user
       interaction).
     </div>
-    <canvas id="myCanvas" style="background-color: black"></canvas>
+    <canvas id="myCanvas"></canvas>
     <script src="track.js"></script>
     <script src="ball.js"></script>
     <script src="sound.js"></script>
     <script>
-      const size = 700;
+      let size;
+      const mediaQuery2 = window.matchMedia("(max-width: 768px)");
+      const mediaQuery1 = window.matchMedia("(max-width: 512px)");
+      function handleScreenChange(event1, event2) {
+        if (event1.matches) {
+          size = 400;
+          trackMinRadius = 40;
+          trackStep = 8;
+          ballRadius = 3;
+        } else if (event2.matches) {
+          size = 700;
+          trackMinRadius = 50;
+          trackStep = 15;
+          ballRadius = 6;
+        } else {
+          size = 700;
+          trackMinRadius = 50;
+          trackStep = 15;
+          ballRadius = 6;
+        }
+      }
+      handleScreenChange(mediaQuery1, mediaQuery2);
+
       myCanvas.width = size;
       myCanvas.height = size / 2;
 
       trackCenter = { x: size / 2, y: size / 2 };
-      trackMinRadius = 50;
-      trackStep = 15;
-      ballRadius = 6;
       ballMinSpeed = 0.01;
       ballSpeedStep = -0.0001;
 

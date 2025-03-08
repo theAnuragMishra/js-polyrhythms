@@ -1,0 +1,20 @@
+.instruction {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+#myCanvas {
+  background-color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .instruction {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 512px) {
+  .instruction {
+    font-size: 1.5rem;
+  }
+}
