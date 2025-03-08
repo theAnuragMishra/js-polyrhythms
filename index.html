@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Polyrhythms</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" style="background-color: black"></canvas>
+    <script src="track.js"></script>
+    <script src="ball.js"></script>
+    <script src="sound.js"></script>
+    <script>
+      const size = 700;
+      myCanvas.width = size;
+      myCanvas.height = size / 2;
+
+      trackCenter = { x: size / 2, y: size / 2 };
+      trackMinRadius = 50;
+      trackStep = 15;
+      ballRadius = 6;
+      ballMinSpeed = 0.01;
+      ballSpeedStep = -0.0001;
+
+      const soundFrequencies = [
+        1760, 1567.98, 1396.91, 1318.51, 1174.66, 1046.5, 987.77, 880, 783.99,
+        698.46, 659.25, 587.33, 523.25, 493.88, 440, 392, 349.23, 329.63,
+        293.66, 261.63,
+      ];
+
+      const tracks = [];
+      const balls = [];
+      const N = 20;
+
+      for (let i = 0; i < N; i++) {
+        const hue = (i * 360) / N;
+        const track = new Track(
+          trackCenter,
+          trackMinRadius + i * trackStep,
+          hue,
+        );
+        const ball = new Ball(
+          track,
+          ballRadius,
+          ballMinSpeed + i * ballSpeedStep,
+          soundFrequencies[i],
+          hue,
+        );
+        tracks.push(track);
+        balls.push(ball);
+      }
+      const ctx = myCanvas.getContext("2d");
+      animate();
+      function animate() {
+        ctx.clearRect(0, 0, size, size);
+        tracks.forEach((track) => track.draw(ctx));
+        balls.forEach((ball) => {
+          ball.move();
+          ball.draw(ctx);
+        });
+
+        requestAnimationFrame(animate);
+      }
+    </script>
+  </body>
+</html>
